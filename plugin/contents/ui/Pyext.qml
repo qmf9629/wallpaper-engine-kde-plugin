@@ -34,8 +34,8 @@ Item {
     function write_wallpaper_config(id, changed, replaceExisting) {
         return new Promise(resolve => {
             if (!fileHelper.writeWallpaperConfig(id, changed, Boolean(replaceExisting))) {
-                notifySaveError("Failed to save wallpaper settings. Previous settings were kept.");
-                throw new Error("Failed to save wallpaper configuration");
+                notifySaveError("无法保存壁纸设置，已保留先前的设置。");
+                throw new Error("无法保存壁纸配置");
             }
             resolve();
         });
@@ -44,8 +44,8 @@ Item {
     function reset_wallpaper_config(id) {
         return new Promise(resolve => {
             if (!fileHelper.resetWallpaperConfig(id)) {
-                notifySaveError("Failed to reset wallpaper settings. Previous settings were kept.");
-                throw new Error("Failed to reset wallpaper configuration");
+                notifySaveError("无法重置壁纸设置，已保留先前的设置。");
+                throw new Error("无法重置壁纸配置");
             }
             resolve();
         });

@@ -7,11 +7,11 @@
             }
         ],
         "Category": "",
-        "Description": "Wallpaper Engine for Kde",
+        "Description": "在 KDE Plasma 中使用 Wallpaper Engine 动态壁纸",
         "Icon": "preferences-desktop-wallpaper",
         "Id": "com.github.catsout.wallpaperEngineKde",
         "License": "GPLv2+",
-        "Name": "Wallpaper Engine for Kde",
+        "Name": "Wallpaper Engine 动态壁纸",
         "ServiceTypes": [
             "Plasma/Wallpaper"
         ],

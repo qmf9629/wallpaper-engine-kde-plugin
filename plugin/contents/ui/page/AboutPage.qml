@@ -30,7 +30,7 @@ Flickable {
         anchors.right: parent.right
 
         OptionItem {
-            text: 'Requirements'
+            text: '使用说明'
             text_color: Kirigami.Theme.textColor
             icon: '../../images/information-outline.svg'
 
@@ -40,12 +40,12 @@ Flickable {
                     color: Kirigami.Theme.disabledTextColor
                     text: `
                         <ol>
-                        <li><i>Wallpaper Engine</i> installed on Steam</li>
-                        <li>Subscribe to some wallpapers on the Workshop</li>
-                        <li>Open the Wallpapers tab, the <i>steamlibrary</i> is found automatically
+                        <li>在 Steam 中安装 <i>Wallpaper Engine</i></li>
+                        <li>在创意工坊中订阅一些壁纸</li>
+                        <li>打开“壁纸”页，程序会自动查找 <i>steamlibrary</i>
                             <ul>
-                                <li>Flatpak and Snap installs and libraries on other drives are included</li>
-                                <li>Nothing found? Pick the folder holding <i>steamapps</i> with the folder button</li>
+                                <li>支持 Flatpak、Snap 安装，以及其他磁盘上的 Steam 库</li>
+                                <li>如果没有找到，请点击文件夹按钮选择包含 <i>steamapps</i> 的目录</li>
                             </ul>
                         </li>
                         </ol>
@@ -58,7 +58,7 @@ Flickable {
         OptionItem {
             visible: libcheck.wallpaper
 
-            text: 'Fix Crashes'
+            text: '修复启动崩溃'
             text_color: Kirigami.Theme.textColor
             icon: '../../images/information-outline.svg'
             contentBottom: ColumnLayout {
@@ -67,8 +67,8 @@ Flickable {
                     color: Kirigami.Theme.disabledTextColor
                     text: `
                         <ol>
-                        <li>Remove <i>WallpaperSource</i> line in <b>~/.config/plasma-org.kde.plasma.desktop-appletsrc</b></li>
-                        <li>Restart KDE</li>
+                        <li>删除 <b>~/.config/plasma-org.kde.plasma.desktop-appletsrc</b> 中的 <i>WallpaperSource</i> 配置行</li>
+                        <li>重启 KDE</li>
                         </ol>
                     `
                     wrapMode: Text.Wrap
@@ -78,7 +78,7 @@ Flickable {
         }
         OptionItem {
             icon: '../../images/github.svg'
-            text: 'Github Repo'
+            text: 'GitHub 项目'
             text_color: Kirigami.Theme.textColor
             MouseArea {
                 anchors.fill: parent
@@ -89,7 +89,7 @@ Flickable {
         }
 
         OptionItem {
-            text: 'Version'
+            text: '版本信息'
             text_color: Kirigami.Theme.textColor
             icon: '../../images/tag.svg'
             contentBottom: ColumnLayout {
@@ -98,11 +98,11 @@ Flickable {
                     color: Kirigami.Theme.disabledTextColor
                     text: `
                         <ul>
-                        <li>plugin: ${Common.version}</li>
-                        <li>plugin lib: ${plugin_info.version}</li>
-                        ${Common.version != plugin_info.version ? "<br><b>warning: The lib version is inconsistent with the plugin version</b>" : ""}
-                        <li>kde: ${Qt.application.version}</li>
-                        <li>file helper: native</li>
+                        <li>插件：${Common.version}</li>
+                        <li>插件库：${plugin_info.version}</li>
+                        ${Common.version != plugin_info.version ? "<br><b>警告：插件库版本与插件版本不一致</b>" : ""}
+                        <li>KDE：${Qt.application.version}</li>
+                        <li>文件助手：原生实现</li>
                         </ul>
                     `
                     wrapMode: Text.Wrap
@@ -112,7 +112,7 @@ Flickable {
         }
 
         OptionItem {
-            text: 'Lib Checking'
+            text: '依赖检查'
             text_color: Kirigami.Theme.textColor
             icon: '../../images/checkmark.svg'
             contentBottom: ListView {
@@ -124,11 +124,11 @@ Flickable {
                     const _model = [
                         {
                             ok: libcheck.qtwebchannel,
-                            name: "qtwebchannel (qml) (for web)"
+                            name: "qtwebchannel（QML，网页壁纸所需）"
                         },
                         {
                             ok: libcheck.wallpaper,
-                            name: "plugin lib (for scene,mpv)"
+                            name: "插件库（场景和 MPV 后端所需）"
                         }
                     ];
                     return _model;

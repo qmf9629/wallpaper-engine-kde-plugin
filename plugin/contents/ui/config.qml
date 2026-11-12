@@ -117,7 +117,7 @@ ColumnLayout {
     GlobalConfig {
         id: globalCfg
         onPersistenceFailed: function(error) {
-            pyext.notifySaveError("Shared wallpaper settings could not be saved. Previous settings were kept.");
+            pyext.notifySaveError("无法保存共享壁纸设置，已保留先前的设置。");
             globalSaveError.reason = error;
             globalSaveError.open();
         }
@@ -125,11 +125,11 @@ ColumnLayout {
     Dialog {
         id: globalSaveError
         property string reason: ""
-        title: "Cannot update shared wallpaper settings"
+        title: "无法更新共享壁纸设置"
         modal: true
         standardButtons: Dialog.Ok
         Label {
-            text: "The previous settings were kept.\n" + globalSaveError.reason
+            text: "已保留先前的设置。\n" + globalSaveError.reason
             wrapMode: Text.Wrap
         }
     }
@@ -212,13 +212,13 @@ ColumnLayout {
         id: bar
         implicitWidth: font.pixelSize*8 * 3
         PlasmaComponents.TabButton {
-            text: "Wallpapers"
+            text: "壁纸"
         }
         PlasmaComponents.TabButton {
-            text: "Settings"
+            text: "设置"
         }
         PlasmaComponents.TabButton {
-            text: "About"
+            text: "关于"
         }
     }
 

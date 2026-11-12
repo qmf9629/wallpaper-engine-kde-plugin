@@ -30,7 +30,7 @@ RowLayout {
     }
     QQC.Dialog {
         id: persistenceErrorDialog
-        title: "Wallpaper settings could not be saved"
+        title: "无法保存壁纸设置"
         standardButtons: QQC.Dialog.Ok
         contentItem: Label { text: wallpaperPage.persistenceError; wrapMode: Text.Wrap }
     }
@@ -64,7 +64,7 @@ RowLayout {
 
                 Label {
                     visible: cfg_WallpaperWorkShopId
-                    text: `Shopid: ${cfg_WallpaperWorkShopId}  Type: ${Common.unpackWallpaperSource(cfg_WallpaperSource).type}`
+                    text: `创意工坊 ID：${cfg_WallpaperWorkShopId}  类型：${Common.typeLabel(Common.unpackWallpaperSource(cfg_WallpaperSource).type)}`
                     //${cfg_WallpaperType}
                 }
 
@@ -113,13 +113,13 @@ RowLayout {
                     actions: [
                         Kirigami.Action {
                             icon.name: "folder-symbolic"
-                            text: 'Library'
-                            tooltip: cfg_SteamLibraryPath ? cfg_SteamLibraryPath : 'Select steam library dir'
+                            text: '库目录'
+                            tooltip: cfg_SteamLibraryPath ? cfg_SteamLibraryPath : '选择 Steam 库目录'
                             onTriggered: wpDialog.open()
                         },
                         Kirigami.Action {
                             id: action_cb_filter
-                            text: 'Filter'
+                            text: '筛选'
                             icon.name: "view-filter"
                             property int currentIndex
                             readonly property var model: Common.filterModel
@@ -138,18 +138,18 @@ RowLayout {
                             property int currentIndex: Common.modelIndexOfValue(model, cfg_SortMode)
                             readonly property var model: [
                                 {
-                                    text: "Sort By Workshop Id",
-                                    short: "Id",
+                                    text: "按创意工坊 ID 排序",
+                                    short: "ID",
                                     value: Common.SortMode.Id
                                 },
                                 {
-                                    text: "Sort Alphabetically By Name",
-                                    short: "Alphabetical",
+                                    text: "按名称排序",
+                                    short: "名称",
                                     value: Common.SortMode.Name
                                 },
                                 {
-                                    text: "Show Newest Modified First",
-                                    short: "Modified",
+                                    text: "按最近修改时间排序",
+                                    short: "修改时间",
                                     value: Common.SortMode.Modified
                                 }
                             ]
@@ -157,7 +157,7 @@ RowLayout {
                         },
                         Kirigami.Action {
                             icon.name: "view-refresh-symbolic"
-                            text: 'Refresh'
+                            text: '刷新'
                             onTriggered: wpListModel.refresh()
                         }
                     ]
@@ -197,10 +197,10 @@ RowLayout {
                     level: 2
                     text: {
                         if(!cfg_SteamLibraryPath)
-                            return "No steam library with Wallpaper Engine found, select one with the folder button above";
+                            return "未找到安装了 Wallpaper Engine 的 Steam 库，请点击上方文件夹按钮选择目录";
                         if(wpListModel.countNoFilter > 0)
-                            return `Found ${wpListModel.countNoFilter} wallpapers, but none of them matched filters`;
-                        return `There are no wallpapers in steam library`;
+                            return `找到 ${wpListModel.countNoFilter} 个壁纸，但没有符合筛选条件的项目`;
+                        return `Steam 库中没有壁纸`;
                     }
                     opacity: 0.5
                 }
@@ -226,12 +226,12 @@ RowLayout {
                         actions: [
                             Kirigami.Action {
                                 icon.name: favor?"user-bookmarks-symbolic":"bookmark-add-symbolic"
-                                tooltip: favor?"Remove from favorites":"Add to favorites"
+                                tooltip: favor?"从收藏中移除":"添加到收藏"
                                 onTriggered: picViewLoader.item.toggleFavor(model, index)
                             },
                             Kirigami.Action {
                                 icon.name: "folder-remote-symbolic"
-                                tooltip: "Open Workshop Link"
+                                tooltip: "打开创意工坊页面"
                                 enabled: workshopid.match(Common.regex_workshop_online)
                                 onTriggered: Qt.openUrlExternally(Common.getWorkshopUrl(workshopid))
                             }
@@ -309,7 +309,7 @@ RowLayout {
 
             FolderDialog {
                 id: wpDialog
-                title: "Select steamlibrary folder"
+                title: "选择 Steam 库目录"
                 onAccepted: {
                     const path = Utils.trimCharR(Common.urlNative(wpDialog.selectedFolder), '/');
                     cfg_SteamLibraryPath = path;
@@ -408,7 +408,7 @@ RowLayout {
                         contentItem: Text {
                             color: Kirigami.Theme.textColor
                             font.capitalization: Font.Capitalize
-                            text: right_content.wpmodel.type
+                            text: Common.typeLabel(right_content.wpmodel.type)
                         }
                     }
 
@@ -456,19 +456,19 @@ RowLayout {
                                     ? "bookmarks-symbolic"
                                     : "bookmark-add-symbolic"
                                 tooltip: right_content.wpmodel.favor
-                                    ? 'Remove from favorites'
-                                    : 'Add to favorites'
+                                    ? '从收藏中移除'
+                                    : '添加到收藏'
                                 onTriggered: picViewLoader.item.toggleFavor(right_content.wpmodel)
                             },
                             Kirigami.Action {
                                 icon.name: "emblem-symbolic-link"
-                                tooltip: "Open Workshop Link"
+                                tooltip: "打开创意工坊页面"
                                 enabled: right_content.wpmodel.workshopid.match(Common.regex_workshop_online)
                                 onTriggered: Qt.openUrlExternally(Common.getWorkshopUrl(right_content.wpmodel.workshopid))
                             },
                             Kirigami.Action {
                                 icon.name: "folder-symbolic"
-                                tooltip: "Open Containing Folder"
+                                tooltip: "打开所在文件夹"
                                 onTriggered: Qt.openUrlExternally(right_content.wpmodel.path) 
                             }
                         ]
@@ -630,7 +630,7 @@ RowLayout {
                         return config.hasOwnProperty(key) || in_config_changes(key);
                     }
 
-                    header.text: 'Option'
+                    header.text: '壁纸选项'
                     header.text_color: Kirigami.Theme.textColor
                     header.icon: '../../images/cheveron-down.svg'
                     header.color: Kirigami.Theme.activeBackgroundColor
@@ -641,7 +641,7 @@ RowLayout {
                         flat: true
                         actions: [
                             Kirigami.Action {
-                                text: 'Reset'
+                                text: '重置'
                                 onTriggered: {
                                     right_opts.reset_config();
                                 }
@@ -653,21 +653,21 @@ RowLayout {
                         model: [
                             {
                                 mark_: markModel,
-                                text: 'Display',
+                                text: '显示模式',
                                 config_key: 'display_mode',
                                 comp: right_opt_combox,
                                 props: {
                                     model: [
                                         {
-                                            text: "Keep Aspect Ratio",
+                                            text: "保持宽高比",
                                             value: Common.DisplayMode.Aspect
                                         },
                                         {
-                                            text: "Scale and Crop",
+                                            text: "缩放并裁剪",
                                             value: Common.DisplayMode.Crop
                                         },
                                         {
-                                            text: "Scale to Fill",
+                                            text: "缩放填满",
                                             value: Common.DisplayMode.Scale
                                         },
                                     ],
@@ -675,7 +675,7 @@ RowLayout {
                                 }
                             },
                             {
-                                text: 'Mute Audio',
+                                text: '静音',
                                 config_key: 'mute_audio',
                                 comp: right_opt_switch,
                                 props: {
@@ -683,7 +683,7 @@ RowLayout {
                                 },
                             },
                             {
-                                text: 'Volume',
+                                text: '音量',
                                 config_key: 'volume', 
                                 comp: right_opt_spinbox,
                                 props: {
@@ -694,7 +694,7 @@ RowLayout {
                                 },
                             },
                             {
-                                text: 'Speed',
+                                text: '播放速度',
                                 config_key: 'speed', 
                                 comp: right_opt_dspinbox,
                                 props: {
@@ -862,7 +862,7 @@ RowLayout {
                         }).catch(error => wallpaperPage.showPersistenceError(error));
                     }
 
-                    header.text: 'User Properties'
+                    header.text: '壁纸属性'
                     header.text_color: Kirigami.Theme.textColor
                     header.icon: '../../images/cheveron-down.svg'
                     header.color: Kirigami.Theme.activeBackgroundColor
@@ -873,7 +873,7 @@ RowLayout {
                         flat: true
                         actions: [
                             Kirigami.Action {
-                                text: 'Reset'
+                                text: '重置'
                                 onTriggered: user_props_group.resetUserProps()
                             }
                         ]

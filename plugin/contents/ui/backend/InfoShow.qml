@@ -1,12 +1,13 @@
 import QtQuick 2.5
 import QtQuick.Layouts 1.2
+import ".."
 
 Item {
     id: infoItem
     anchors.fill: parent
-    property string info: "error"
+    property string info: "未知错误"
     property string type: "unknown"
-    property string wid: "unknown"
+    property string wid: "未知"
     property string source
     GridLayout {
         id: configRow
@@ -17,9 +18,9 @@ Item {
             Layout.alignment: Qt.AlignCenter
             Layout.preferredWidth: infoItem.width * 0.7
             text: [
-            `Shop id: ${infoItem.wid}`,
-            `Type: ${infoItem.type}`,
-            `Message: ${infoItem.info}`
+            `创意工坊 ID：${infoItem.wid}`,
+            `类型：${Common.typeLabel(infoItem.type)}`,
+            `信息：${infoItem.info}`
             ].join("\n");
             color: "yellow"
             wrapMode: Text.Wrap

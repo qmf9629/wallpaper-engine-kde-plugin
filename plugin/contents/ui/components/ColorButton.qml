@@ -36,7 +36,7 @@ Rectangle {
 
     ColorDialog {
         id: colorDialog
-        title: "Select Color"
+        title: "选择颜色"
         selectedColor: colorBtn.colorValue
         onAccepted: {
             colorBtn.colorValue = selectedColor;

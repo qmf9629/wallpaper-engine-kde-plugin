@@ -61,40 +61,40 @@ Flickable {
 
         OptionGroup {
             Layout.fillWidth: true
-            header.text: 'Common Option'
+            header.text: '常规选项'
             header.text_color: Kirigami.Theme.textColor
             header.icon: '../../images/cheveron-down.svg'
             header.color: Kirigami.Theme.activeBackgroundColor
 
             OptionItem {
-                text: 'Pause'
+                text: '暂停播放'
                 text_color: Kirigami.Theme.textColor
                 icon: '../../images/pause.svg'
                 actor:  ComboBox {
                     id: pauseMode
                     model: [
                         {
-                            text: "Focus or Maximized Window",
+                            text: "有焦点或最大化的窗口",
                             value: Common.PauseMode.FocusOrMax
                         },
                         {
-                            text: "Focus Window",
+                            text: "有焦点的窗口",
                             value: Common.PauseMode.Focus
                         },
                         {
-                            text: "Maximized Window",
+                            text: "最大化的窗口",
                             value: Common.PauseMode.Max
                         },
                         {
-                            text: "FullScreen",
+                            text: "全屏窗口",
                             value: Common.PauseMode.FullScreen
                         },
                         {
-                            text: "Any Window",
+                            text: "任意窗口",
                             value: Common.PauseMode.Any
                         },
                         {
-                            text: "Never",
+                            text: "从不",
                             value: Common.PauseMode.Never
                         }
                     ]
@@ -106,13 +106,13 @@ Flickable {
                     Text {
                         Layout.fillWidth: true
                         color: Kirigami.Theme.disabledTextColor
-                        text: "Automatically pauses playback if any/focus/maximized window detected"
+                        text: "检测到符合条件的窗口时自动暂停壁纸播放"
                         wrapMode: Text.Wrap
                     }
                }
             }
             OptionItem {
-                text: 'Only react to windows on this screen'
+                text: '仅响应当前屏幕上的窗口'
                 text_color: Kirigami.Theme.textColor
                 actor: Switch {
                     id: ckbox_pauseFilterByScreen
@@ -122,12 +122,12 @@ Flickable {
                         Layout.fillWidth: true
                         color: Kirigami.Theme.disabledTextColor
                         wrapMode: Text.Wrap
-                        text: "When pausing on focus/maximized windows, ignore windows on other screens"
+                        text: "按焦点或最大化窗口暂停时，忽略其他屏幕上的窗口"
                     }
                 }
             }
             OptionItem {
-                text: 'Pause if PC is on battery power'
+                text: '使用电池供电时暂停'
                 text_color: Kirigami.Theme.textColor
                 actor: Switch {
                     id: chkbox_pauseOnBatPower
@@ -136,7 +136,7 @@ Flickable {
             OptionItem {
                 // Independent of "pause on battery power": the runtime applies this
                 // threshold on its own (0 = off), so keep it reachable to reset.
-                text: 'Pause if battery level is below'
+                text: '电量低于此值时暂停'
                 text_color: Kirigami.Theme.textColor
                 actor: RowLayout {
                     SpinBox {
@@ -149,29 +149,29 @@ Flickable {
                 }
             }
             OptionItem {
-                text: 'Pause if gamemode is started'
+                text: '游戏模式启动时暂停'
                 text_color: Kirigami.Theme.textColor
                 actor: Switch {
                     id: chkbox_pauseOnGameMode
                 }
             }
             OptionItem {
-                text: 'Display'
+                text: '显示模式'
                 text_color: Kirigami.Theme.textColor
                 icon: '../../images/window.svg'
                 actor: ComboBox {
                     id: displayMode
                     model: [
                         {
-                            text: "Keep Aspect Ratio",
+                            text: "保持宽高比",
                             value: Common.DisplayMode.Aspect
                         },
                         {
-                            text: "Scale and Crop",
+                            text: "缩放并裁剪",
                             value: Common.DisplayMode.Crop
                         },
                         {
-                            text: "Scale to Fill",
+                            text: "缩放填满",
                             value: Common.DisplayMode.Scale
                         },
                     ]
@@ -182,7 +182,7 @@ Flickable {
             }
 
             OptionItem {
-                text: 'Span Across Screens'
+                text: '跨屏显示'
                 text_color: Kirigami.Theme.textColor
                 icon: '../../images/window.svg'
                 actor: Switch {
@@ -192,13 +192,12 @@ Flickable {
                     Layout.fillWidth: true
                     wrapMode: Text.WordWrap
                     color: Kirigami.Theme.disabledTextColor
-                    text: "Show each screen's slice of the whole desktop. Enable 'Same wallpaper "
-                        + "on all screens' for a continuous image. Each screen renders the full desktop."
+                    text: "让每个屏幕显示完整桌面壁纸中的对应部分。启用“所有屏幕使用相同壁纸”以获得连续画面。"
                 }
             }
 
             OptionItem {
-                text: 'Resume Time'
+                text: '恢复播放延迟'
                 text_color: Kirigami.Theme.textColor
                 icon: '../../images/timer.svg'
                 actor: RowLayout {
@@ -210,19 +209,19 @@ Flickable {
                             to: 60*1000
                             stepSize: 50
                         }
-                        Label { text: " ms"; color: Kirigami.Theme.textColor }
+                        Label { text: " 毫秒"; color: Kirigami.Theme.textColor }
                     }
                 }
                 contentBottom: ColumnLayout {
                     Text {
                         Layout.fillWidth: true
                         color: Kirigami.Theme.disabledTextColor
-                        text: "Time to wait to resume playback from pause"
+                        text: "暂停后等待多久再恢复播放"
                     }
                 }
             }
             OptionItem {
-                text: 'Randomize Timer'
+                text: '定时随机切换'
                 text_color: Kirigami.Theme.textColor
                 icon: '../../images/time.svg'
                 actor: Switch {
@@ -232,14 +231,14 @@ Flickable {
                     Text {
                         Layout.fillWidth: true
                         color: Kirigami.Theme.disabledTextColor
-                        text: "Randomize wallpapers filtered in the 'Wallpapers' page"
+                        text: "在“壁纸”页面筛选出的壁纸中随机切换"
                     }
                     RowLayout {
                         Layout.fillWidth: true
                         visible: ckbox_randomizeWallpaper.checked
                         Label {
                             id:heightpicker
-                            text: "Randomize every "
+                            text: "切换间隔："
                             color: Kirigami.Theme.textColor
                         }
                         SpinBox {
@@ -249,7 +248,7 @@ Flickable {
                             to: 60*24*30
                             stepSize: 1
                         }
-                        Label { text: " min"; color: Kirigami.Theme.textColor }
+                        Label { text: " 分钟"; color: Kirigami.Theme.textColor }
                         Item { Layout.fillWidth: true }
                     }
                     RowLayout {
@@ -257,7 +256,7 @@ Flickable {
                         visible: ckbox_randomizeWallpaper.checked
                         Label {
                             id: randomWhilePausedSetter
-                            text: "Skip randomizing while wallpaper is paused  "
+                            text: "壁纸暂停时不随机切换  "
                             color: Kirigami.Theme.textColor
                         }
                         Switch {
@@ -268,7 +267,7 @@ Flickable {
             }
 
             OptionItem {
-                text: 'Same wallpaper on all screens'
+                text: '所有屏幕使用相同壁纸'
                 text_color: Kirigami.Theme.textColor
                 icon: '../../images/window.svg'
                 actor: Switch {
@@ -280,13 +279,13 @@ Flickable {
                     Layout.fillWidth: true
                     wrapMode: Text.WordWrap
                     color: Kirigami.Theme.disabledTextColor
-                    text: "Share the wallpaper choice and randomization across all screens "
+                    text: "在所有屏幕间共享壁纸选择和随机切换设置 "
                         + "(one configuration for the whole system). Press Apply to take effect."
                 }
             }
 
             OptionItem {
-                text: "Playback Speed"
+                text: "播放速度"
                 text_color: Kirigami.Theme.textColor
                 icon: '../../images/fast-forward.svg'
                 actor: RowLayout {
@@ -301,7 +300,7 @@ Flickable {
 
 
             OptionItem {
-                text: "Mute Audio"
+                text: "静音"
                 text_color: Kirigami.Theme.textColor
                 icon: ckbox_muteAudio.checked
                     ? '../../images/volume-off.svg'
@@ -311,7 +310,7 @@ Flickable {
                 }
             }
             OptionItem {
-                text: "Volume"
+                text: "音量"
                 text_color: Kirigami.Theme.textColor
                 visible: !cfg_MuteAudio
                 actor: RowLayout {
@@ -335,7 +334,7 @@ Flickable {
             OptionItem {
                 visible: libcheck.wallpaper
                 text_color: Kirigami.Theme.textColor
-                text: "Mouse Input"
+                text: "鼠标输入"
                 icon: '../../images/mouse.svg'
                 actor: Switch {
                     id: ckbox_mouseInput
@@ -346,13 +345,13 @@ Flickable {
         OptionGroup {
             Layout.fillWidth: true
 
-            header.text: 'Video Option'
+            header.text: '视频选项'
             header.text_color: Kirigami.Theme.textColor
             header.icon: '../../images/cheveron-down.svg'
             header.color: Kirigami.Theme.activeBackgroundColor
 
             OptionItem {
-                text: 'Video Backend'
+                text: '视频后端'
                 text_color: Kirigami.Theme.textColor
                 icon: '../../images/plugin.svg'
                 actor: ComboBox {
@@ -375,7 +374,7 @@ Flickable {
             }
 
             OptionItem {
-                text: 'Show Mpv Stats'
+                text: '显示 MPV 统计信息'
                 text_color: Kirigami.Theme.textColor
                 icon: '../../images/information-outline.svg'
                 visible: cfg_VideoBackend == Common.VideoBackend.Mpv
@@ -385,15 +384,15 @@ Flickable {
             }
 
             OptionItem {
-                text: 'Hardware Decode'
+                text: '硬件解码'
                 text_color: Kirigami.Theme.textColor
                 icon: '../../images/plugin.svg'
                 visible: cfg_VideoBackend == Common.VideoBackend.Mpv
                 actor: ComboBox {
                     id: cbox_mpvHwdec
                     model: [
-                        { text: "Auto",     value: "auto" },
-                        { text: "Software", value: "no"   }
+                        { text: "自动",     value: "auto" },
+                        { text: "软件解码", value: "no"   }
                     ]
                     textRole: "text"
                     onActivated: cfg_MpvHwdec = model[currentIndex].value
@@ -411,14 +410,14 @@ Flickable {
         OptionGroup {
             Layout.fillWidth: true
 
-            header.text: 'Scene Option'
+            header.text: '场景选项'
             header.text_color: Kirigami.Theme.textColor
             header.icon: '../../images/cheveron-down.svg'
             header.color: Kirigami.Theme.activeBackgroundColor
             visible: libcheck.wallpaper
 
             OptionItem {
-                text: 'Fps'
+                text: '帧率上限'
                 text_color: Kirigami.Theme.textColor
                 icon: '../../images/tuning.svg'
                 actor: RowLayout {
@@ -440,13 +439,13 @@ Flickable {
                     Text {
                         Layout.fillWidth: true
                         color: Kirigami.Theme.disabledTextColor
-                        text: "Low: 10, Medium: 15, High: 25, Ultra High: 30"
+                        text: "低：10，中：15，高：25，超高：30"
                     }
                 }
 
             }
             OptionItem {
-                text: 'Cache static layers'
+                text: '缓存静态图层'
                 text_color: Kirigami.Theme.textColor
                 icon: '../../images/tuning.svg'
                 actor: Switch {
@@ -457,13 +456,12 @@ Flickable {
                         Layout.fillWidth: true
                         wrapMode: Text.Wrap
                         color: Kirigami.Theme.disabledTextColor
-                        text: "Render unchanging layers (e.g. blurred backgrounds) once instead of "
-                            + "every frame. Saves CPU/GPU. Disable if a wallpaper looks wrong."
+                        text: "静态图层（例如模糊背景）只渲染一次，而不是每帧重复渲染，可节省 CPU/GPU 资源。若壁纸显示异常，请关闭此选项。"
                     }
                 }
             }
             OptionItem {
-                text: 'Share GPU across screens'
+                text: '跨屏共享 GPU'
                 text_color: Kirigami.Theme.textColor
                 icon: '../../images/tuning.svg'
                 actor: Switch {
@@ -474,14 +472,12 @@ Flickable {
                         Layout.fillWidth: true
                         wrapMode: Text.Wrap
                         color: Kirigami.Theme.disabledTextColor
-                        text: "On multi-monitor setups, share one GPU device so identical "
-                            + "textures load once instead of per screen. Saves VRAM. "
-                            + "Takes effect after the wallpaper reloads."
+                        text: "多屏使用相同壁纸时，共用一个 GPU 设备并只加载一份纹理，以节省显存。重新加载壁纸后生效。"
                     }
                 }
             }
             OptionItem {
-                text: 'Mirror scene across screens'
+                text: '跨屏镜像场景'
                 text_color: Kirigami.Theme.textColor
                 icon: '../../images/tuning.svg'
                 actor: Switch {
@@ -492,15 +488,12 @@ Flickable {
                         Layout.fillWidth: true
                         wrapMode: Text.Wrap
                         color: Kirigami.Theme.disabledTextColor
-                        text: "On multi-monitor setups showing the same scene wallpaper, render "
-                            + "it once and mirror it to the other screens. Saves the per-screen "
-                            + "render-target VRAM. Skipped for wallpapers that react to the cursor. "
-                            + "Takes effect after the wallpaper reloads."
+                        text: "多屏显示相同场景壁纸时，只渲染一次并镜像到其他屏幕，以节省显存。会跳过需要响应鼠标的壁纸，重新加载后生效。"
                     }
                 }
             }
             OptionItem {
-                text: 'Shader cache'
+                text: '着色器缓存'
                 text_color: Kirigami.Theme.textColor
                 icon: '../../images/information-outline.svg'
                 actor: Kirigami.ActionToolBar {
@@ -509,8 +502,8 @@ Flickable {
                     flat: false
                     actions: [
                         Kirigami.Action {
-                            text: 'Show'
-                            tooltip: 'Show in file manager'
+                            text: '打开'
+                            tooltip: '在文件管理器中打开'
                             onTriggered: {
                                 if(plugin_info.cache_path)
                                     Qt.openUrlExternally(plugin_info.cache_path);

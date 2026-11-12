@@ -29,13 +29,22 @@ QtObject {
 
     readonly property string version: '0.8.0'
 
-    readonly property string repo_url: 'https://github.com/RainyPixel/wallpaper-engine-kde-plugin'
+    readonly property string repo_url: 'https://github.com/qmf9629/wallpaper-engine-kde-plugin'
+
+    function typeLabel(type) {
+        switch (String(type || '').toLowerCase()) {
+        case 'scene': return '场景';
+        case 'web': return '网页';
+        case 'video': return '视频';
+        default: return type && String(type).toLowerCase() !== 'unknown' ? type : '未知';
+        }
+    }
 
     readonly property var wpitem_template: ({
         workshopid: "",
         path: "", // need convert to qurl
         loaded: false,
-        title: "unknown",
+        title: "未知壁纸",
         preview: "",
         type: "unknown",
         contentrating: "Everyone",
@@ -53,42 +62,42 @@ QtObject {
     }
 
     property var filterModel: ListModel {
-        ListElement { text: "Favorite";     type:"favor";         key:"favor";         def: 0}
-        ListElement { text: "TYPE";         type:"_nocheck";      key:"";              def: 1}
-        ListElement { text: "Scene";        type:"type";          key:"scene";         def: 1}
-        ListElement { text: "Web";          type:"type";          key:"web";           def: 1}
-        ListElement { text: "Video";        type:"type";          key:"video";         def: 1}
-        ListElement { text: "AGE";          type:"_nocheck";      key:"";              def: 1}
-        ListElement { text: "Everyone";     type:"contentrating"; key:"Everyone";      def: 1}
-        ListElement { text: "Questionable"; type:"contentrating"; key:"Questionable";  def: 1}
-        ListElement { text: "Mature";       type:"contentrating"; key:"Mature";        def: 0}
-        ListElement { text: "GENRE";        type:"_nocheck";      key:"";              def: 1}
-        ListElement { text: "Abstract";     type:"tags";          key:"Abstract";      def: 1}
-        ListElement { text: "Animal";       type:"tags";          key:"Animal";        def: 1}
-        ListElement { text: "Anime";        type:"tags";          key:"Anime";         def: 1}
-        ListElement { text: "Cartoon";      type:"tags";          key:"Cartoon";       def: 1}
-        ListElement { text: "CGI";          type:"tags";          key:"CGI";           def: 1}
-        ListElement { text: "Cyberpunk";    type:"tags";          key:"Cyberpunk";     def: 1}
-        ListElement { text: "Fantasy";      type:"tags";          key:"Fantasy";       def: 1}
-        ListElement { text: "Game";         type:"tags";          key:"Game";          def: 1}
-        ListElement { text: "Girls";        type:"tags";          key:"Girls";         def: 1}
-        ListElement { text: "Guys";         type:"tags";          key:"Guys";          def: 1}
-        ListElement { text: "Landscape";    type:"tags";          key:"Landscape";     def: 1}
-        ListElement { text: "Medieval";     type:"tags";          key:"Medieval";      def: 1}
-        ListElement { text: "Memes";        type:"tags";          key:"Memes";         def: 1}
-        ListElement { text: "MMD";          type:"tags";          key:"MMD";           def: 1}
-        ListElement { text: "Music";        type:"tags";          key:"Music";         def: 1}
-        ListElement { text: "Nature";       type:"tags";          key:"Nature";        def: 1}
-        ListElement { text: "Pixel art";    type:"tags";          key:"Pixel art";     def: 1}
-        ListElement { text: "Relaxing";     type:"tags";          key:"Relaxing";      def: 1}
-        ListElement { text: "Retro";        type:"tags";          key:"Retro";         def: 1}
-        ListElement { text: "Sci-Fi";       type:"tags";          key:"Sci-Fi";        def: 1}
-        ListElement { text: "Sports";       type:"tags";          key:"Sports";        def: 1}
-        ListElement { text: "Technology";   type:"tags";          key:"Technology";    def: 1}
-        ListElement { text: "Television";   type:"tags";          key:"Television";    def: 1}
-        ListElement { text: "Vehicle";      type:"tags";          key:"Vehicle";       def: 1}
-        ListElement { text: "Unspecified";  type:"tags";          key:"Unspecified";   def: 1}
-        ListElement { text: "PLAYLIST";     type:"_nocheck";      key:"";              def: 1}
+        ListElement { text: "收藏"; type:"favor"; key:"favor"; def: 0}
+        ListElement { text: "类型"; type:"_nocheck"; key:""; def: 1}
+        ListElement { text: "场景"; type:"type"; key:"scene"; def: 1}
+        ListElement { text: "网页"; type:"type"; key:"web"; def: 1}
+        ListElement { text: "视频"; type:"type"; key:"video"; def: 1}
+        ListElement { text: "年龄分级"; type:"_nocheck"; key:""; def: 1}
+        ListElement { text: "全年龄"; type:"contentrating"; key:"Everyone"; def: 1}
+        ListElement { text: "争议内容"; type:"contentrating"; key:"Questionable"; def: 1}
+        ListElement { text: "成人内容"; type:"contentrating"; key:"Mature"; def: 0}
+        ListElement { text: "分类"; type:"_nocheck"; key:""; def: 1}
+        ListElement { text: "抽象"; type:"tags"; key:"Abstract"; def: 1}
+        ListElement { text: "动物"; type:"tags"; key:"Animal"; def: 1}
+        ListElement { text: "动漫"; type:"tags"; key:"Anime"; def: 1}
+        ListElement { text: "卡通"; type:"tags"; key:"Cartoon"; def: 1}
+        ListElement { text: "CGI"; type:"tags"; key:"CGI"; def: 1}
+        ListElement { text: "赛博朋克"; type:"tags"; key:"Cyberpunk"; def: 1}
+        ListElement { text: "奇幻"; type:"tags"; key:"Fantasy"; def: 1}
+        ListElement { text: "游戏"; type:"tags"; key:"Game"; def: 1}
+        ListElement { text: "女性"; type:"tags"; key:"Girls"; def: 1}
+        ListElement { text: "男性"; type:"tags"; key:"Guys"; def: 1}
+        ListElement { text: "风景"; type:"tags"; key:"Landscape"; def: 1}
+        ListElement { text: "中世纪"; type:"tags"; key:"Medieval"; def: 1}
+        ListElement { text: "梗图"; type:"tags"; key:"Memes"; def: 1}
+        ListElement { text: "MMD"; type:"tags"; key:"MMD"; def: 1}
+        ListElement { text: "音乐"; type:"tags"; key:"Music"; def: 1}
+        ListElement { text: "自然"; type:"tags"; key:"Nature"; def: 1}
+        ListElement { text: "像素艺术"; type:"tags"; key:"Pixel art"; def: 1}
+        ListElement { text: "舒缓"; type:"tags"; key:"Relaxing"; def: 1}
+        ListElement { text: "复古"; type:"tags"; key:"Retro"; def: 1}
+        ListElement { text: "科幻"; type:"tags"; key:"Sci-Fi"; def: 1}
+        ListElement { text: "体育"; type:"tags"; key:"Sports"; def: 1}
+        ListElement { text: "科技"; type:"tags"; key:"Technology"; def: 1}
+        ListElement { text: "电视"; type:"tags"; key:"Television"; def: 1}
+        ListElement { text: "载具"; type:"tags"; key:"Vehicle"; def: 1}
+        ListElement { text: "未分类"; type:"tags"; key:"Unspecified"; def: 1}
+        ListElement { text: "播放列表"; type:"_nocheck"; key:""; def: 1}
 
         // need to be able to lock the filterModel because when settings are being applied to multiple screens simultaneously,
         // the filtermodel can be modified by multiple threads at the same time. This can lead to having excess playlist entries, which will cause
