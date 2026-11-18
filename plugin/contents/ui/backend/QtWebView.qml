@@ -91,6 +91,7 @@ Item {
             settings.pdfViewerEnabled = false;
             settings.showScrollBars = false;
 
+            settings.localContentCanAccessFileUrls = true;
             settings.localContentCanAccessRemoteUrls = true;
             settings.allowGeolocationOnInsecureOrigins = true;
             _init = true;
