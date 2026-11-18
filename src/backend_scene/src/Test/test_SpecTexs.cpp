@@ -1,5 +1,6 @@
 #include <doctest.h>
 
+#include "Audio/AudioCapture.h"
 #include "SpecTexs.hpp"
 
 using namespace wallpaper;
@@ -48,6 +49,21 @@ TEST_SUITE("SpecTexs") {
             CHECK(IsSpecLinkTex(tex));
             CHECK(ParseLinkTex(tex) == i);
         }
+    }
+
+    TEST_CASE("audio spectrum downsamples into Wallpaper Engine band counts") {
+        std::array<float, wallpaper::audio::kSpectrumBands> input {};
+        for (size_t i = 0; i < input.size(); i++) input[i] = static_cast<float>(i);
+
+        std::array<float, 32> bands32 {};
+        wallpaper::audio::ResampleBands(input, bands32.data(), 32);
+        CHECK(bands32[0] == doctest::Approx(0.5f));
+        CHECK(bands32[31] == doctest::Approx(62.5f));
+
+        std::array<float, 16> bands16 {};
+        wallpaper::audio::ResampleBands(input, bands16.data(), 16);
+        CHECK(bands16[0] == doctest::Approx(1.5f));
+        CHECK(bands16[15] == doctest::Approx(61.5f));
     }
 
 } // TEST_SUITE

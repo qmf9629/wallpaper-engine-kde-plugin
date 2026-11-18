@@ -29,6 +29,7 @@ target_include_directories(backend_scene_tests PRIVATE
 target_link_libraries(backend_scene_tests PRIVATE
     wpUtils
     wpFs
+    wpAudio
     ${LZ4_LIBRARIES}
     Eigen3::Eigen
 )

@@ -1,4 +1,5 @@
 #include "WPShaderValueUpdater.hpp"
+#include "Audio/AudioCapture.h"
 #include "Eigen/src/Core/Matrix.h"
 #include "Eigen/src/Geometry/Transform.h"
 #include "Scene/Scene.h"
@@ -6,6 +7,8 @@
 #include "SpecTexs.hpp"
 #include "Core/ArrayHelper.hpp"
 #include "Utils/Algorism.h"
+
+#include <algorithm>
 
 #include <Eigen/Dense>
 #include <Eigen/Geometry>
@@ -73,6 +76,11 @@ void WPShaderValueUpdater::InitUniforms(SceneNode* pNode, const ExistsUniformOp&
     info.has_TEXELSIZEHALF = existsOp(G_TEXELSIZEHALF);
     info.has_SCREEN        = existsOp(G_SCREEN);
     info.has_LP            = existsOp(G_LP);
+    for (size_t i = 0; i < G_AUDIO_SPECTRUM.size(); i++) {
+        info.has_AUDIO[i] = existsOp(G_AUDIO_SPECTRUM[i]);
+        if (info.has_AUDIO[i] && !m_scene->audioCapture)
+            m_scene->audioCapture = audio::AudioCapture::Acquire();
+    }
 
     std::accumulate(begin(info.texs), end(info.texs), 0, [&existsOp](uint index, auto& value) {
         value.has_resolution = existsOp(WE_GLTEX_RESOLUTION_NAMES[index]);
@@ -187,6 +195,20 @@ void WPShaderValueUpdater::UpdateUniforms(SceneNode* pNode, sprite_map_t& sprite
     // shadervs.push_back({"g_EffectTextureProjectionMatrixInverse",
     // ShaderValue::ValueOf(Eigen::Matrix4f::Identity())});
     if (info.has_TIME) updateOp(G_TIME, (float)m_scene->elapsingTime);
+
+    if (m_scene->audioCapture &&
+        std::any_of(info.has_AUDIO.begin(), info.has_AUDIO.end(), [](bool value) { return value; })) {
+        const auto spectrum = m_scene->audioCapture->Spectrum();
+        for (size_t i = 0; i < G_AUDIO_SPECTRUM.size(); i++) {
+            if (!info.has_AUDIO[i]) continue;
+            const int bands = G_AUDIO_RESOLUTIONS[i / 2];
+            const auto& source = i % 2 == 0 ? spectrum.left : spectrum.right;
+            std::array<float, audio::kSpectrumBands> values {};
+            audio::ResampleBands(source, values.data(), bands);
+            updateOp(G_AUDIO_SPECTRUM[i],
+                     std::span<const float> { values.data(), static_cast<size_t>(bands) });
+        }
+    }
 
     if (info.has_DAYTIME) updateOp(G_DAYTIME, (float)m_dayTime);
 

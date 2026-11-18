@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include <unordered_map>
 
 #include "SceneTexture.h"
@@ -13,6 +14,10 @@ namespace wallpaper
 class ParticleSystem;
 class IShaderValueUpdater;
 class IImageParser;
+namespace audio
+{
+class AudioCapture;
+}
 
 namespace fs
 {
@@ -45,6 +50,7 @@ public:
     std::shared_ptr<SceneNode>           sceneGraph;
     std::unique_ptr<IShaderValueUpdater> shaderValueUpdater;
     std::unique_ptr<IImageParser>        imageParser;
+    std::shared_ptr<audio::AudioCapture> audioCapture;
     std::unique_ptr<fs::VFS>             vfs;
 
     std::string scene_id { "unknown_id" };

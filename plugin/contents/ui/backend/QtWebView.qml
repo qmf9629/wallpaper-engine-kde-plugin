@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import QtWebEngine 1.10
 import QtWebChannel 1.10
+import com.github.catsout.wallpaperEngineKde 1.2
 import ".."
 import "../js/utils.mjs" as Utils
 
@@ -51,6 +52,7 @@ Item {
         signal sigUserProperties(var properties)
         signal sigAudio(var audioArray)
         property bool loaded: false
+        property bool audioWanted: false
         onLoadedChanged: {
             if (!loaded) return;
             webobj.sigGeneralProperties({fps: webItem.fps});
@@ -70,6 +72,19 @@ Item {
     WebChannel {
         id: channel
         registeredObjects: [webobj]
+    }
+
+    Loader {
+        id: audioSpectrum
+        active: webobj.audioWanted && !web.paused && webobj.loaded
+        source: "../components/AudioSpectrum.qml"
+        onLoaded: item.active = active
+    }
+    Connections {
+        target: audioSpectrum.item
+        function onFrame(audioArray) {
+            webobj.sigAudio(audioArray);
+        }
     }
 
     WebEngineView {
@@ -104,6 +119,7 @@ Item {
         onLoadingChanged: (loadingInfo) => {
             if (loadingInfo.status === WebEngineView.LoadStartedStatus) {
                 webobj.loaded = false;
+                webobj.audioWanted = false;
                 webItem.projectProperties = {};
             }
             if(loadingInfo.status == WebEngineView.LoadSucceededStatus) {
@@ -142,13 +158,16 @@ Item {
                     name: "Audio",
                     sourceCode: `
                         window.wallpaperRegisterAudioListener = function(listener) {
-                            if(window.wpeQml)
+                            if(window.wpeQml) {
                                 window.wpeQml.sigAudio.connect(listener);
-                            else
+                                window.wpeQml.audioWanted = true;
+                            } else
                                 window.wallpaperRAed = listener;
                         }
                     `
-                },
+                }
+            ]);
+            userScripts.insert([
                 {
                     worldId: WebEngineScript.MainWorld,
                     injectionPoint: WebEngineScript.Deferred,
@@ -158,8 +177,10 @@ Item {
                             window.wpeQml = channel.objects.wpeQml;
                             const wpeQml = window.wpeQml;
                             const propertyListener = window.wallpaperPropertyListener;
-                            if(window.wallpaperRAed)
+                            if(window.wallpaperRAed) {
                                 wpeQml.sigAudio.connect(window.wallpaperRAed);
+                                wpeQml.audioWanted = true;
+                            }
                             if(propertyListener) {
                                 if(propertyListener.applyGeneralProperties)
                                     wpeQml.sigGeneralProperties.connect(propertyListener.applyGeneralProperties);

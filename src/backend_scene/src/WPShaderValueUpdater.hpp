@@ -38,6 +38,7 @@ struct WPUniformInfo {
     bool has_TEXELSIZEHALF { false };
     bool has_SCREEN { false };
     bool has_LP { false };
+    std::array<bool, 6> has_AUDIO {};
 
     struct Tex {
         bool has_resolution { false };
